@@ -1,0 +1,34 @@
+﻿@page "/"
+
+<button @onclick="Test">Teeest</button>
+<ul>
+	@foreach (string s in _log)
+	{
+		<li>@s</li>
+	}
+</ul>
+
+
+@code
+{
+	List<string> _log = new List<string>();
+
+	private async Task Test()
+	{
+		_log.Add("KLIJENT -- Pocinje sa radom");
+		int rez = await SimulacijaPosla();
+		_log.Add($"KLIJENT -- Zavrsava sa radom, rezultat {rez}");
+		StateHasChanged();
+
+
+	}
+
+	private async Task<int> SimulacijaPosla()
+	{
+		_log.Add("SERVER -- Pocinje sa radom");
+		await Task.Delay(2000);
+		_log.Add("SERVER -- Zavrsava sa radom");
+		StateHasChanged();
+		return 67;
+	}
+}
